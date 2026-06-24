@@ -364,7 +364,7 @@ h1, h2, h3, h4, p { margin-top: 0; }
 @keyframes popInHero { from { opacity: 0; transform: translateY(20px) scale(0.94); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal, #detailView, #listView, .hero-glow, .bar-fill, .ring-fg, .toast {
+  .reveal, #detailView, #listView, .hero-glow, .bar-fill, .ring-fg {
     transition: none !important; animation: none !important; opacity: 1 !important; transform: none !important;
   }
 }

@@ -17,7 +17,7 @@ const CONFIG = {
   coachName:  "Coach Bart",               // naam van de coach
   coachHandle:"@bartlopen",               // TikTok/social van de coach
   coachPhoto: "coach.jpg",                // coachfoto (bestand in deze map)
-  athleteWord:"kanjer",                   // hoe de coach de loper aanspreekt
+  athleteWord:"strijder",                   // hoe de coach de loper aanspreekt
   catchphrase:"Train op tijd, niet op ego 💪", // jouw TikTok-leus
 };
 /* =================================================================== */
@@ -42,36 +42,60 @@ const zoneByKey = Object.fromEntries(ZONES.map((z) => [z.key, z]));
 /* --- Coach Bart (@bartlopen): motiverende, beheerste praat per type -- */
 const COACH = {
   duur: [
-    "Rustig tempo vandaag, kanjer. Praten moet makkelijk kunnen.",
+    "Rustig tempo vandaag, strijder. Praten moet makkelijk kunnen.",
     "Geen haast — deze kalme minuten bouwen je basis op.",
-    "Lekker ontspannen lopen. De knie mag stil blijven, kanjer.",
+    "Lekker ontspannen lopen. De knie mag stil blijven, strijder.",
     "Rustig is precies goed. Zo blijf je fit en blessurevrij.",
+    "Op tijd, niet op ego, strijder. Vandaag telt het gevoel.",
+    "Soepele pas, rustige adem. Niets forceren.",
+    "Luister naar je lijf, strijder. Rustig is geen verlies.",
+    "Geduldig de basis leggen. Hier word je sterker van.",
   ],
   opbouw: [
-    "Opbouwloop, kanjer. Rustig starten, pas later naar steady.",
+    "Opbouwloop, strijder. Rustig starten, pas later naar steady.",
     "Nooit jagen aan het begin — de winst zit in het laatste deel.",
     "Voel hoe je gecontroleerd versnelt. Beheerst, niet gehaast.",
-    "Eerst rustig inschakelen, dan vloeiend naar tempo. Mooi bezig.",
+    "Eerst rustig inschakelen, dan vloeiend naar tempo, strijder.",
+    "Laat het tempo komen, dwing het niet. Mooi gedoseerd.",
+    "Begin trager dan je wilt, strijder. Dat is de kunst.",
+    "Tweede helft sterker dan de eerste. Dat is het doel.",
   ],
   tempo: [
-    "Tempoblok op halve-marathongevoel, kanjer. Stevig maar beheerst.",
+    "Tempoblok op halve-marathongevoel, strijder. Stevig maar beheerst.",
     "Gecontroleerd stevig — korte zinnen moeten nog net lukken.",
-    "Dit is je wedstrijdritme. Onthoud goed hoe het voelt.",
+    "Dit is je wedstrijdritme. Onthoud goed hoe het voelt, strijder.",
     "Net buiten je comfort, maar nooit verzuren. Daar zit de winst.",
+    "Op tijd lopen, niet op ego, strijder. Houd 'm strak.",
+    "Voel de drempel, blijf eronder. Beheerst doorbijten.",
+    "Gelijkmatig en vlot, strijder. Geen schokken in je tempo.",
   ],
   interval: [
-    "Vlotte stukjes, kanjer. Soepel blijven, geen sprint najagen.",
+    "Vlotte stukjes, strijder. Soepel blijven, geen sprint najagen.",
     "Houd elke herhaling gelijk en ontspannen. Techniek voorop.",
     "Even pittig, daarna rustig herstellen. Jij hebt dit in de hand.",
-    "Scherp maar licht. Hier komt je snelheid vandaan.",
+    "Scherp maar licht. Hier komt je snelheid vandaan, strijder.",
+    "Lichte voeten, hoge cadans. Niet stampen, strijder.",
+    "Elke herhaling een kopie van de vorige. Beheerst.",
+    "Kort en knap, dan loslaten. De knie blijft blij, strijder.",
   ],
   herstel: [
-    "Hersteldag, kanjer. Rustig aan, daar word je beter van.",
+    "Hersteldag, strijder. Rustig aan, daar word je beter van.",
     "Vandaag laad je op. Herstel hoort net zo goed bij trainen.",
     "Houd het licht en kalm. Morgen sta je er sterker.",
-    "Slim getraind is rustig getraind. De knie zegt je dank je wel.",
+    "Slim getraind is rustig getraind, strijder. De knie zegt dank je.",
+    "Niets bewijzen vandaag. Gewoon losdraaien.",
+    "Rust is waar de winst binnenkomt, strijder. Geniet ervan.",
   ],
 };
+
+const DONE = [
+  "💪 Knap en beheerst, strijder!",
+  "✅ Slim getraind, strijder!",
+  "🙌 Sterk werk, strijder!",
+  "🧠 Op tijd, niet op ego — top, strijder!",
+  "🦵 Blessurevrij binnen, strijder!",
+  "🔥 Mooi gedoseerd, strijder!",
+];
 const coachLine = (zone) => {
   const arr = COACH[zone] || COACH.duur;
   return arr[Math.floor(Math.random() * arr.length)];
@@ -220,6 +244,15 @@ const sid = (week, day) => `w${week}-${day}`;
 const flatSessions = PLAN.flatMap((w) => w.sessions.map((s) => ({ ...s, week: w.week })));
 const totalSessions = flatSessions.length;
 
+function autoTime(raw) {
+  const digits = String(raw).replace(/\D/g, "").slice(0, 6);
+  if (digits.length <= 2) return digits;
+  const parts = []; let s = digits;
+  while (s.length > 2) { parts.unshift(s.slice(-2)); s = s.slice(0, -2); }
+  parts.unshift(s);
+  return parts.join(":");
+}
+
 function parseTime(str) {
   if (!str) return null;
   const parts = String(str).split(":").map((p) => parseInt(p, 10));
@@ -302,7 +335,7 @@ function renderHero(stats) {
   fg.style.strokeDasharray = c;
   fg.style.strokeDashoffset = c;
   requestAnimationFrame(() => { fg.style.strokeDashoffset = c * (1 - pct / 100); });
-  const mottos = ["Stap voor stap, kanjer!", "Lekker bezig, kanjer!", "Je bouwt 'm rustig op.", "Halverwege — beheerst doorpakken! ⚡", "Bijna race-klaar, kanjer!", "Finisher! Wat een kanjer!"];
+  const mottos = ["Stap voor stap, strijder!", "Lekker bezig, strijder!", "Je bouwt 'm rustig op.", "Halverwege — beheerst doorpakken! ⚡", "Bijna race-klaar, strijder!", "Finisher! Wat een strijder!"];
   $("heroMotto").textContent =
     stats.raceDone ? mottos[5] : pct >= 80 ? mottos[4] : pct >= 50 ? mottos[3] : pct >= 20 ? mottos[2] : pct > 0 ? mottos[1] : mottos[0];
 }
@@ -321,7 +354,7 @@ function renderNextUp() {
   const next = flatSessions.find((s) => !log[sid(s.week, s.day)]?.done);
   const box = $("nextUp");
   if (!next) {
-    box.innerHTML = `<div class="nextup-card done"><span class="nextup-eyebrow">🏅 Schema compleet</span><strong>Alles afgevinkt — chapeau, kanjer!</strong></div>`;
+    box.innerHTML = `<div class="nextup-card done"><span class="nextup-eyebrow">🏅 Schema compleet</span><strong>Alles afgevinkt — chapeau, strijder!</strong></div>`;
     return;
   }
   const z = zoneByKey[next.zone];
@@ -516,7 +549,7 @@ function openDetail(week, day) {
 
   const recalc = () => ($("fPace").textContent = fmtPace(paceSeconds($("fDistance").value, $("fTime").value)) || "—");
   $("fDistance").addEventListener("input", recalc);
-  $("fTime").addEventListener("input", recalc);
+  $("fTime").addEventListener("input", () => { $("fTime").value = autoTime($("fTime").value); recalc(); });
 
   const collect = () => ({
     ...log[id],
@@ -536,7 +569,7 @@ function openDetail(week, day) {
     const cur = collect();
     cur.done = !cur.done;
     log[id] = cur; saveLog();
-    if (cur.done) { celebrate(); toast(s.race ? "🏅 Finisher! Wat een kanjer!" : "💥 Knap gedaan, kanjer!"); }
+    if (cur.done) { celebrate(); toast(s.race ? "🏅 Finisher! Op tijd binnen — wat een strijder!" : DONE[Math.floor(Math.random() * DONE.length)]); }
     closeDetail();
   });
 
