@@ -338,6 +338,33 @@ function renderHero(stats) {
   const mottos = ["Stap voor stap, strijder!", "Lekker bezig, strijder!", "Je bouwt 'm rustig op.", "Halverwege — beheerst doorpakken! ⚡", "Bijna race-klaar, strijder!", "Finisher! Wat een strijder!"];
   $("heroMotto").textContent =
     stats.raceDone ? mottos[5] : pct >= 80 ? mottos[4] : pct >= 50 ? mottos[3] : pct >= 20 ? mottos[2] : pct > 0 ? mottos[1] : mottos[0];
+  renderCountdown();
+}
+
+function raceInfo() {
+  const rw = PLAN.find((w) => w.race) || PLAN[PLAN.length - 1];
+  const rs = rw.sessions.find((s) => s.day === "za") || rw.sessions[rw.sessions.length - 1];
+  const off = { ma: 0, di: 1, wo: 2, do: 3, vr: 4, za: 5, zo: 6 }[rs.day] ?? 5;
+  const date = new Date(START_DATE.getTime() + ((rw.week - 1) * 7 + off) * 864e5);
+  const days = Math.round((date.setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / 864e5);
+  return { days, name: rs.title.replace(/^🏁\s*/, "") };
+}
+function renderCountdown() {
+  const motto = $("heroMotto");
+  if (!motto) return;
+  let el = $("raceCountdown");
+  if (!el) {
+    el = document.createElement("p");
+    el.id = "raceCountdown";
+    el.className = "hero-countdown";
+    motto.after(el);
+  }
+  const { days, name } = raceInfo();
+  el.textContent =
+    days > 1 ? `🗓\uFE0F nog ${days} dagen tot je ${name}` :
+    days === 1 ? `🗓\uFE0F morgen is het zover: ${name}!` :
+    days === 0 ? `🔥 vandaag is het zover: ${name}!` :
+    `🎉 ${name} volbracht \u2014 chapeau!`;
 }
 
 function renderStats(stats) {
@@ -351,7 +378,10 @@ function renderStats(stats) {
 }
 
 function renderNextUp() {
-  const next = flatSessions.find((s) => !log[sid(s.week, s.day)]?.done);
+  const cw = currentWeek();
+  const next =
+    flatSessions.find((s) => s.week >= cw && !log[sid(s.week, s.day)]?.done) ||
+    flatSessions.find((s) => !log[sid(s.week, s.day)]?.done);
   const box = $("nextUp");
   if (!next) {
     box.innerHTML = `<div class="nextup-card done"><span class="nextup-eyebrow">🏅 Schema compleet</span><strong>Alles afgevinkt — chapeau, strijder!</strong></div>`;
@@ -404,6 +434,7 @@ function tagOf(w) {
 
 function renderWeeks() {
   const cw = currentWeek();
+  const todayCode = ["zo", "ma", "di", "wo", "do", "vr", "za"][new Date().getDay()];
   let html = "", lastPhase = "";
   PLAN.forEach((w, i) => {
     if (w.phase !== lastPhase) { html += `<h4 class="sub-phase reveal">${w.phase}</h4>`; lastPhase = w.phase; }
@@ -417,10 +448,10 @@ function renderWeeks() {
       if (pace) bits.push(pace);
       const logged = bits.length ? `<span class="session-logged">📊 ${bits.join(" · ")}</span>` : "";
       return `
-        <button class="session zone-${s.zone} ${e.done ? "is-done" : ""}" data-week="${w.week}" data-day="${s.day}">
+        <button class="session zone-${s.zone} ${e.done ? "is-done" : ""} ${w.week === cw && s.day === todayCode ? "is-today" : ""}" data-week="${w.week}" data-day="${s.day}">
           <span class="session-day">${s.dayLabel.slice(0, 2)}</span>
           <span class="session-body">
-            <span class="session-title">${s.title}</span>
+            <span class="session-title">${s.title}${w.week === cw && s.day === todayCode ? ' <span class="today-badge">Vandaag</span>' : ""}</span>
             <span class="session-meta">${s.min} min · ${s.kind}</span>
             ${logged}
           </span>
@@ -463,6 +494,19 @@ function renderInfo() {
     </article>`).join("");
 }
 
+function addJumpButton() {
+  const head = document.querySelector(".weeks .phase-head");
+  if (!head || document.getElementById("jumpNow")) return;
+  const btn = document.createElement("button");
+  btn.id = "jumpNow";
+  btn.type = "button";
+  btn.className = "jump-now";
+  btn.textContent = "Naar deze week \u2193";
+  btn.addEventListener("click", () =>
+    document.querySelector(".week-card.is-current")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+  head.insertAdjacentElement("afterend", btn);
+}
+
 function renderAll() {
   const stats = computeStats();
   renderHero(stats);
@@ -471,6 +515,7 @@ function renderAll() {
   renderChart();
   renderZones();
   renderWeeks();
+  addJumpButton();
   renderBadges(stats);
   renderInfo();
   observeReveals();
