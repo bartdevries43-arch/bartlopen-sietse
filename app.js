@@ -9,7 +9,7 @@
    Hergebruik deze app voor een andere loper: kopieer de map, wijzig dit
    blok, vervang coach.jpg, en pas zo nodig het PLAN/de ZONES aan.       */
 const CONFIG = {
-  appName:    "Op naar 21,1K",            // titel boven in de app
+  appName:    "Op naar 1:45",            // titel boven in de app
   runner:     "Sietse",                   // naam van de loper
   goal:       "Halve marathon in 1:45",   // doel (groot in de hero)
   startDate:  new Date(2026, 5, 8),       // maandag van week 1 (maand 0-based: 5 = juni)
@@ -459,10 +459,10 @@ function renderWeeks() {
         </button>`;
     }).join("");
     html += `
-      <article class="week-card reveal ${w.week === cw ? "is-current" : ""}" style="--i:${i % 4}">
+      <article class="week-card reveal ${w.week === cw ? "is-current" : ""} ${w.week < cw ? (w.sessions.every((x) => log[sid(w.week, x.day)]?.done) ? "is-complete" : "is-missed") : ""}" style="--i:${i % 4}">
         <header class="week-head">
           <div><span class="week-no">Week ${w.week}</span><span class="week-dates">${w.dates} · ${w.km}</span></div>
-          ${w.week === cw ? `<span class="week-tag tag-now">Nu</span>` : tagOf(w)}
+          ${w.week === cw ? `<span class="week-tag tag-now">Nu</span>` : w.week < cw ? (w.sessions.every((x) => log[sid(w.week, x.day)]?.done) ? `<span class="week-tag tag-done">✓ af</span>` : `<span class="week-tag tag-missed">gemist</span>`) : tagOf(w)}
         </header>
         <div class="session-list">${sess}</div>
       </article>`;
