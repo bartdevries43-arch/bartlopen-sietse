@@ -1,23 +1,23 @@
 /* ================================================================== *
- *  Sietse's Halve Marathon — Run Coach
+ *  Sietse's Halve Marathon, Run Coach
  *  Vast schema + invullen/afvinken, Strava-achtige stats, badges.
  *  Alles lokaal in de browser. Geen server nodig (werkt ook via file://).
  *  Sturing: TIJD & GEVOEL leidend, kilometers slechts indicatief.
  * ================================================================== */
 
-/* ========== INSTELLINGEN PER HARDLOPER — pas dit blok aan ==========
+/* ========== INSTELLINGEN PER HARDLOPER, pas dit blok aan ==========
    Hergebruik deze app voor een andere loper: kopieer de map, wijzig dit
    blok, vervang coach.jpg, en pas zo nodig het PLAN/de ZONES aan.       */
 const CONFIG = {
   unit:       "min",
   zonePaceSuffix: "/km",
   footEmoji:  "🏃‍♂️",
-  mottos: ["Stap voor stap, strijder!", "Lekker bezig, strijder!", "Je bouwt 'm rustig op.", "Halverwege — beheerst doorpakken! ⚡", "Bijna race-klaar, strijder!", "Finisher! Wat een strijder!"],
+  mottos: ["Stap voor stap, strijder!", "Lekker bezig, strijder!", "Je bouwt 'm rustig op.", "Halverwege, beheerst doorpakken! ⚡", "Bijna race-klaar, strijder!", "Finisher! Wat een strijder!"],
   appName:    "Op naar 1:45",            // titel boven in de app
   runner:     "Sietse",                   // naam van de loper
   goal:       "Halve marathon in 1:45",   // doel (groot in de hero)
   startDate:  new Date(2026, 5, 8),       // maandag van week 1 (maand 0-based: 5 = juni)
-  storeKey:   "sietse-hm.log.v1",         // UNIEKE opslagsleutel — per loper anders!
+  storeKey:   "sietse-hm.log.v1",         // UNIEKE opslagsleutel, per loper anders!
   coachName:  "Coach Bart",               // naam van de coach
   coachHandle:"@bartlopen",               // TikTok/social van de coach
   coachPhoto: "coach.jpg",                // coachfoto (bestand in deze map)
@@ -36,7 +36,7 @@ const ZONE_SUFFIX = CONFIG.zonePaceSuffix ?? "/km";
 const COACH_INITIAL = (CONFIG.coachName.replace(/^coach\s+/i, "")[0] || "C").toUpperCase();
 const TOTAL_WEEKS = 16;
 
-/* --- Tempozones — tijd & RPE leidend, paces zijn indicatief --------- */
+/* --- Tempozones, tijd & RPE leidend, paces zijn indicatief --------- */
 const ZONES = [
   { key: "herstel",  name: "Heel rustig",      pace: "langzamer dan 6:45", info: "RPE 2-3 · herstel & wennen" },
   { key: "duur",     name: "Rustige duurloop", pace: "6:15–6:45",          info: "RPE 3-4 · praten moet makkelijk" },
@@ -50,7 +50,7 @@ const zoneByKey = Object.fromEntries(ZONES.map((z) => [z.key, z]));
 const COACH = {
   duur: [
     "Rustig tempo vandaag, strijder. Praten moet makkelijk kunnen.",
-    "Geen haast — deze kalme minuten bouwen je basis op.",
+    "Geen haast, deze kalme minuten bouwen je basis op.",
     "Lekker ontspannen lopen. De knie mag stil blijven, strijder.",
     "Rustig is precies goed. Zo blijf je fit en blessurevrij.",
     "Op tijd, niet op ego, strijder. Vandaag telt het gevoel.",
@@ -60,7 +60,7 @@ const COACH = {
   ],
   opbouw: [
     "Opbouwloop, strijder. Rustig starten, pas later naar steady.",
-    "Nooit jagen aan het begin — de winst zit in het laatste deel.",
+    "Nooit jagen aan het begin, de winst zit in het laatste deel.",
     "Voel hoe je gecontroleerd versnelt. Beheerst, niet gehaast.",
     "Eerst rustig inschakelen, dan vloeiend naar tempo, strijder.",
     "Laat het tempo komen, dwing het niet. Mooi gedoseerd.",
@@ -69,7 +69,7 @@ const COACH = {
   ],
   tempo: [
     "Tempoblok op halve-marathongevoel, strijder. Stevig maar beheerst.",
-    "Gecontroleerd stevig — korte zinnen moeten nog net lukken.",
+    "Gecontroleerd stevig, korte zinnen moeten nog net lukken.",
     "Dit is je wedstrijdritme. Onthoud goed hoe het voelt, strijder.",
     "Net buiten je comfort, maar nooit verzuren. Daar zit de winst.",
     "Op tijd lopen, niet op ego, strijder. Houd 'm strak.",
@@ -99,7 +99,7 @@ const DONE = [
   "💪 Knap en beheerst, strijder!",
   "✅ Slim getraind, strijder!",
   "🙌 Sterk werk, strijder!",
-  "🧠 Op tijd, niet op ego — top, strijder!",
+  "🧠 Op tijd, niet op ego, top, strijder!",
   "🦵 Blessurevrij binnen, strijder!",
   "🔥 Mooi gedoseerd, strijder!",
 ];
@@ -110,10 +110,10 @@ const coachLine = (zone) => {
 
 /* --- Waarom deze training? (uitleg per type) ----------------------- */
 const WHY = {
-  duur:     "Rustige duurlopen bouwen je aerobe motor: sterker hart, meer haarvaten en betere vetverbranding. Voor jou doen ze nog meer — ze laten knie, pezen, kuiten en voeten rustig wennen aan de herhaalde schokbelasting. Daarom groeit vooral de zaterdagduurloop stap voor stap.",
-  opbouw:   "Bij de opbouwloop start je bewust rustig en schakel je pas in het laatste deel naar steady. Zo leer je gecontroleerd versnellen op vermoeide benen — precies wat je in de finale van de halve marathon nodig hebt, zonder de knie vroeg te belasten.",
+  duur:     "Rustige duurlopen bouwen je aerobe motor: sterker hart, meer haarvaten en betere vetverbranding. Voor jou doen ze nog meer, ze laten knie, pezen, kuiten en voeten rustig wennen aan de herhaalde schokbelasting. Daarom groeit vooral de zaterdagduurloop stap voor stap.",
+  opbouw:   "Bij de opbouwloop start je bewust rustig en schakel je pas in het laatste deel naar steady. Zo leer je gecontroleerd versnellen op vermoeide benen, precies wat je in de finale van de halve marathon nodig hebt, zonder de knie vroeg te belasten.",
   tempo:    "Tempoblokken liggen rond je halve-marathoninspanning. Je leert sneller lopen zónder te verzuren en went aan het ritme van 1:45. Korte blokken met rust ertussen houden de belasting beheersbaar terwijl je drempel omhoog kruipt.",
-  interval: "Korte, vlotte herhalingen prikkelen je loopeconomie en snelheid. Door soepel te blijven — geen sprint, geen verzuring — schakelen je benen vlotter, terwijl de schokbelasting laag en gedoseerd blijft.",
+  interval: "Korte, vlotte herhalingen prikkelen je loopeconomie en snelheid. Door soepel te blijven, geen sprint, geen verzuring, schakelen je benen vlotter, terwijl de schokbelasting laag en gedoseerd blijft.",
   herstel:  "Herstel is waar je sterker wordt. Lichte inspanning houdt het bloed stromen zonder nieuwe belasting, zodat de winst van de zware dagen echt binnenkomt en de knie de tijd krijgt om mee te groeien.",
 };
 
@@ -134,7 +134,7 @@ const PLAN = [
     za({ zone: "duur",    min: 45, title: "45 min duurloop",       goal: "Duur opbouwen",      blocks: ["45 min rustig", "Wandelpauze mag elke 12–15 min", "Gebruik de pauze vroeg, niet pas als het misgaat"] }),
   ]},
   { week: 3, dates: "22–28 jun", km: "13–15 km", phase: "Fase 1 · Herstart & wennen", sessions: [
-    ma({ zone: "interval", min: 40, title: "6×1 min vlot",         goal: "Beentjes wakker",    blocks: ["8–10 min inlopen", "6×1 min vlot (RPE 7)", "2 min rustig ertussen", "Uitlopen — 40 min totaal"] }),
+    ma({ zone: "interval", min: 40, title: "6×1 min vlot",         goal: "Beentjes wakker",    blocks: ["8–10 min inlopen", "6×1 min vlot (RPE 7)", "2 min rustig ertussen", "Uitlopen, 40 min totaal"] }),
     za({ zone: "duur",     min: 50, title: "50 min duurloop",      goal: "Langer op de benen", blocks: ["50 min rustige duurloop", "Constant en ontspannen"] }),
   ]},
   { week: 4, dates: "29 jun–5 jul", km: "10–12 km", phase: "Fase 1 · Herstart & wennen", recovery: true, sessions: [
@@ -144,11 +144,11 @@ const PLAN = [
 
   /* Fase 2 · Duur uitbouwen en lichte snelheid */
   { week: 5, dates: "6–12 jul", km: "15–17 km", phase: "Fase 2 · Duur uitbouwen", sessions: [
-    ma({ zone: "tempo",  min: 45, title: "3×5 min steady",        goal: "Drempelgevoel",      blocks: ["8–10 min inlopen", "3×5 min steady (RPE 5-6)", "3 min rustig ertussen", "Uitlopen — 45 min totaal"] }),
+    ma({ zone: "tempo",  min: 45, title: "3×5 min steady",        goal: "Drempelgevoel",      blocks: ["8–10 min inlopen", "3×5 min steady (RPE 5-6)", "3 min rustig ertussen", "Uitlopen, 45 min totaal"] }),
     za({ zone: "duur",   min: 60, title: "60 min duurloop",       goal: "Eerste uur",         blocks: ["60 min rustig", "Verdeel je krachten"] }),
   ]},
   { week: 6, dates: "13–19 jul", km: "16–18 km", phase: "Fase 2 · Duur uitbouwen", sessions: [
-    ma({ zone: "interval", min: 45, title: "6×2 min vlot",        goal: "Snelheidsuithouding", blocks: ["8–10 min inlopen", "6×2 min vlot (RPE 6-7)", "2 min rustig ertussen", "Uitlopen — 45 min totaal"] }),
+    ma({ zone: "interval", min: 45, title: "6×2 min vlot",        goal: "Snelheidsuithouding", blocks: ["8–10 min inlopen", "6×2 min vlot (RPE 6-7)", "2 min rustig ertussen", "Uitlopen, 45 min totaal"] }),
     za({ zone: "duur",     min: 65, title: "65 min duurloop",     goal: "Duur vasthouden",     blocks: ["65 min rustige duurloop", "Drinken oefenen"] }),
   ]},
   { week: 7, dates: "20–26 jul", km: "18–20 km", phase: "Fase 2 · Duur uitbouwen", sessions: [
@@ -162,11 +162,11 @@ const PLAN = [
 
   /* Fase 3 · Halve-marathonritme opbouwen */
   { week: 9, dates: "3–9 aug", km: "20–22 km", phase: "Fase 3 · HM-ritme opbouwen", sessions: [
-    ma({ zone: "tempo", min: 55, title: "4×6 min tempoblok",      goal: "HM-ritme voelen",     blocks: ["8–10 min inlopen", "4×6 min tempoblok (RPE 6)", "3 min rustig ertussen", "Uitlopen — 55 min totaal"] }),
+    ma({ zone: "tempo", min: 55, title: "4×6 min tempoblok",      goal: "HM-ritme voelen",     blocks: ["8–10 min inlopen", "4×6 min tempoblok (RPE 6)", "3 min rustig ertussen", "Uitlopen, 55 min totaal"] }),
     za({ zone: "duur",  min: 75, title: "75 min duurloop",        goal: "Piek-duur opbouwen",  blocks: ["75 min rustige duurloop", "Rustig en geduldig"] }),
   ]},
   { week: 10, dates: "10–16 aug", km: "20–22 km", phase: "Fase 3 · HM-ritme opbouwen", sessions: [
-    ma({ zone: "interval", min: 50, title: "5×3 min vlot",        goal: "Scherpte",            blocks: ["8–10 min inlopen", "5×3 min vlot (RPE 6-7)", "2 min rustig ertussen", "Uitlopen — 50 min totaal"] }),
+    ma({ zone: "interval", min: 50, title: "5×3 min vlot",        goal: "Scherpte",            blocks: ["8–10 min inlopen", "5×3 min vlot (RPE 6-7)", "2 min rustig ertussen", "Uitlopen, 50 min totaal"] }),
     za({ zone: "duur",     min: 80, title: "80 min duurloop",     goal: "Duur vasthouden",     blocks: ["80 min rustig", "Drinken & eten oefenen"] }),
   ]},
   { week: 11, dates: "17–23 aug", km: "22–24 km", phase: "Fase 3 · HM-ritme opbouwen", sessions: [
@@ -180,15 +180,15 @@ const PLAN = [
 
   /* Fase 4 · Specifiek trainen en fris worden */
   { week: 13, dates: "31 aug–6 sep", km: "24–26 km", phase: "Fase 4 · Specifiek & fris", sessions: [
-    ma({ zone: "tempo", min: 60, title: "3×10 min tempoblok",     goal: "Specifieke scherpte", blocks: ["8–10 min inlopen", "3×10 min tempoblok (RPE 6-7)", "4 min rustig ertussen", "Uitlopen — 60 min totaal"] }),
+    ma({ zone: "tempo", min: 60, title: "3×10 min tempoblok",     goal: "Specifieke scherpte", blocks: ["8–10 min inlopen", "3×10 min tempoblok (RPE 6-7)", "4 min rustig ertussen", "Uitlopen, 60 min totaal"] }),
     za({ zone: "duur",  min: 90, title: "90 min duurloop",        goal: "⭐ Belangrijk testmoment", kind: "Testmoment", test: true, blocks: ["90 min rustige duurloop", "Kantelpunt: lukt dit pijnvrij?", "Knie de dag erna normaal = groen licht voor 1:45"] }),
   ]},
   { week: 14, dates: "7–13 sep", km: "24–26 km", phase: "Fase 4 · Specifiek & fris", sessions: [
-    ma({ zone: "interval", min: 55, title: "4×5 min vlot",        goal: "Fris & scherp",       blocks: ["8–10 min inlopen", "4×5 min vlot (RPE 6)", "3 min rustig ertussen", "Uitlopen — 55 min totaal"] }),
+    ma({ zone: "interval", min: 55, title: "4×5 min vlot",        goal: "Fris & scherp",       blocks: ["8–10 min inlopen", "4×5 min vlot (RPE 6)", "3 min rustig ertussen", "Uitlopen, 55 min totaal"] }),
     za({ zone: "duur",     min: 95, title: "95 min duurloop",     goal: "Lange duur",          blocks: ["95 min rustig", "Laatste 15 min steady als de knie goed is"] }),
   ]},
   { week: 15, dates: "14–20 sep", km: "27–29 km", phase: "Fase 4 · Specifiek & fris", sessions: [
-    ma({ zone: "tempo", min: 65, title: "2×15 min HM-inspanning", goal: "Wedstrijdritme",      blocks: ["8–10 min inlopen", "2×15 min op halve-marathoninspanning (RPE 6-7)", "5 min rustig ertussen", "Uitlopen — 65 min totaal"] }),
+    ma({ zone: "tempo", min: 65, title: "2×15 min HM-inspanning", goal: "Wedstrijdritme",      blocks: ["8–10 min inlopen", "2×15 min op halve-marathoninspanning (RPE 6-7)", "5 min rustig ertussen", "Uitlopen, 65 min totaal"] }),
     za({ zone: "duur",  min: 102, title: "100–105 min lange duurloop", goal: "Piek-lange duur", blocks: ["100–105 min rustige lange duurloop", "Niet forceren"] }),
   ]},
   { week: 16, dates: "21–27 sep", km: "raceweek", phase: "Fase 4 · Specifiek & fris", taper: true, race: true, sessions: [
@@ -202,7 +202,7 @@ const INFO = [
   { icon: "🦵", title: "Knie: signaal → actie", items: [
     "Pijn tot 2/10 die niet verandert: rustig afmaken, daarna 24 uur checken.",
     "Pijn 3/10 of stijgend: stoppen met tempo, naar huis wandelen of rustig uitlopen.",
-    "Mank lopen, stekende pijn of zwelling: training afbreken — eerst pijnvrij wandelen.",
+    "Mank lopen, stekende pijn of zwelling: training afbreken, eerst pijnvrij wandelen.",
     "Pijnvrij bouwen gaat altijd vóór tempo. Tijd is leidend, niet je ego.",
   ]},
   { icon: "🔄", title: "Altijd hetzelfde ritueel", items: [
@@ -212,7 +212,7 @@ const INFO = [
     "Wandelpauze is een slim hulpmiddel: gebruik 'm vroeg, niet pas als het misgaat.",
   ]},
   { icon: "💪", title: "Kracht, ondergrond & schoenen", items: [
-    "Gym/krachttraining blijft ondersteunend — hou het erin.",
+    "Gym/krachttraining blijft ondersteunend, hou het erin.",
     "Geen zware beentraining op vrijdag en liever ook niet vlak vóór de maandagtraining.",
     "Loop meestal vlak; vermijd harde afdalingen voor de knie.",
     "Blijf bij vertrouwde schoenen.",
@@ -380,7 +380,7 @@ function renderHero(stats) {
   fg.style.strokeDasharray = c;
   fg.style.strokeDashoffset = c;
   requestAnimationFrame(() => { fg.style.strokeDashoffset = c * (1 - pct / 100); });
-  const mottos = CONFIG.mottos || ["Zet 'm op, strijder!", "Lekker bezig, strijder!", "Je bouwt 'm rustig op, strijder.", "Halverwege — knap volgehouden! ⚡", "Bijna race-klaar, strijder!", "Finisher! Wat een prestatie, strijder. 🏅"];
+  const mottos = CONFIG.mottos || ["Zet 'm op, strijder!", "Lekker bezig, strijder!", "Je bouwt 'm rustig op, strijder.", "Halverwege, knap volgehouden! ⚡", "Bijna race-klaar, strijder!", "Finisher! Wat een prestatie, strijder. 🏅"];
   $("heroMotto").textContent =
     stats.raceDone ? mottos[5] : pct >= 80 ? mottos[4] : pct >= 50 ? mottos[3] : pct >= 20 ? mottos[2] : pct > 0 ? mottos[1] : mottos[0];
   renderCountdown();
@@ -407,12 +407,12 @@ function renderCountdown() {
   const { days, name } = raceInfo();
   const wks = Math.round(days / 7), mon = Math.round(days / 30);
   el.textContent =
-    days > 180 ? `🗓️ jouw grote doel: over ~${mon} maanden — ${name}` :
+    days > 180 ? `🗓️ jouw grote doel: over ~${mon} maanden · ${name}` :
     days > 14 ? `🗓️ nog ${wks} weken tot je ${name}` :
     days > 1 ? `🗓️ nog ${days} dagen tot je ${name}` :
     days === 1 ? `🗓️ morgen is het zover: ${name}!` :
     days === 0 ? `🔥 vandaag is het zover: ${name}!` :
-    `🎉 ${name} volbracht — chapeau!`;
+    `🎉 ${name} volbracht, chapeau!`;
 }
 
 function renderStats(stats) {
@@ -432,7 +432,7 @@ function renderNextUp() {
     flatSessions.find((s) => !log[sid(s.week, s.day)]?.done);
   const box = $("nextUp");
   if (!next) {
-    box.innerHTML = `<div class="nextup-card done"><span class="nextup-eyebrow">🏅 Schema compleet</span><strong>Alles afgevinkt — chapeau, ${RUNNER}!</strong></div>`;
+    box.innerHTML = `<div class="nextup-card done"><span class="nextup-eyebrow">🏅 Schema compleet</span><strong>Alles afgevinkt, chapeau, ${RUNNER}!</strong></div>`;
     return;
   }
   const z = zoneByKey[next.zone];
@@ -655,10 +655,10 @@ function renderRecords(stats) {
   }
   const pace = fmtPace(stats.bestPace);
   const longest = UNIT === "min"
-    ? (stats.maxTime ? `${Math.round(stats.maxTime / 60)} min` : "—")
-    : (stats.maxDist ? `${stats.maxDist} km` : "—");
+    ? (stats.maxTime ? `${Math.round(stats.maxTime / 60)} min` : "–")
+    : (stats.maxDist ? `${stats.maxDist} km` : "–");
   const rows = [
-    ["⚡ Snelste tempo", pace || "—"],
+    ["⚡ Snelste tempo", pace || "–"],
     [UNIT === "min" ? "⏱️ Langste loop" : "🏔️ Verste loop", longest],
     ["📊 Totaal gelopen", `${Math.round(stats.km * 10) / 10} km`],
     ["🔥 Langste reeks", String(stats.streak)],
@@ -809,7 +809,7 @@ function openDetail(week, day) {
           </span>
         </label>
         <label class="full">Gemiddeld tempo
-          <output id="fPace" class="pace-out">${fmtPace(paceSeconds(e.distance, e.time)) || "—"}</output>
+          <output id="fPace" class="pace-out">${fmtPace(paceSeconds(e.distance, e.time)) || "–"}</output>
         </label>
         <label>Hartslag (bpm)
           <input id="fHr" type="number" inputmode="numeric" placeholder="bv. 152" value="${escapeHtml(e.hr ?? "")}">
@@ -835,7 +835,7 @@ function openDetail(week, day) {
     if (!$("fTimeMinutes").value && !$("fTimeSeconds").value) return "";
     return durationValue($("fTimeMinutes").value, $("fTimeSeconds").value);
   };
-  const recalc = () => ($("fPace").textContent = fmtPace(paceSeconds($("fDistance").value, readTime())) || "—");
+  const recalc = () => ($("fPace").textContent = fmtPace(paceSeconds($("fDistance").value, readTime())) || "–");
   $("fDistance").addEventListener("input", recalc);
   $("fTimeMinutes").addEventListener("input", recalc);
   $("fTimeSeconds").addEventListener("input", () => {
@@ -863,7 +863,7 @@ function openDetail(week, day) {
     log[id] = cur; saveLog();
     if (cur.done) {
       celebrate();
-      toast(w.finish ? "🌞 Zomer rond! Wat een strijder!" : w.race ? "🏅 Finisher! Wat een prestatie, strijder!" : w.tuneup ? "🏁 Wedstrijd voltooid — sterk gepacet!" : DONE[Math.floor(Math.random() * DONE.length)]);
+      toast(w.finish ? "🌞 Zomer rond! Wat een strijder!" : w.race ? "🏅 Finisher! Wat een prestatie, strijder!" : w.tuneup ? "🏁 Wedstrijd voltooid, sterk gepacet!" : DONE[Math.floor(Math.random() * DONE.length)]);
     }
     closeDetail();
   });
@@ -949,7 +949,7 @@ function celebrate() {
  *  Init
  * ================================================================== */
 /* Branding uit CONFIG zetten (zodat templaten makkelijk is) */
-document.title = `${CONFIG.appName} — ${CONFIG.coachHandle}`;
+document.title = `${CONFIG.appName} · ${CONFIG.coachHandle}`;
 if ($("appName")) $("appName").textContent = CONFIG.appName;
 if ($("brandHandle")) $("brandHandle").textContent = CONFIG.coachHandle;
 if ($("footCredit")) {
@@ -1097,7 +1097,7 @@ $("importFile").addEventListener("change", (e) => {
       if (!incoming || typeof incoming !== "object") throw new Error("ongeldig");
       log = { ...log, ...incoming };
       saveLog(); renderAll();
-      toast("Back-up geladen ⬆︎ — welkom terug!");
+      toast("Back-up geladen ⬆︎, welkom terug!");
     } catch {
       toast("Kon dit bestand niet lezen");
     }
