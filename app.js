@@ -130,11 +130,11 @@ const PLAN = [
     za({ zone: "duur",    min: 35, title: "35 min duurloop",      goal: "Knie laten wennen",  blocks: ["35 min rustige duurloop", "Knie moet stil blijven", "Stoppen bij stekende pijn"] }),
   ]},
   { week: 2, dates: "15–21 jun", km: "11–13 km", phase: "Fase 1 · Herstart & wennen", sessions: [
-    ma({ zone: "duur",    min: 35, title: "35 min + versnellingen", goal: "Soepelheid",        blocks: ["35 min rustig", "Daarna 4×20 sec ontspannen versnellen", "Volledig herstel tussen de versnellingen"] }),
+    ma({ zone: "duur",    min: 35, title: "35 min met versnellingen", goal: "Soepelheid", blocks: ["35 min totaal", "Loop daarin 4×20 sec ontspannen versnellen", "Herstel volledig rustig tussen de versnellingen; de klok blijft doorlopen"] }),
     za({ zone: "duur",    min: 45, title: "45 min duurloop",       goal: "Duur opbouwen",      blocks: ["45 min rustig", "Wandelpauze mag elke 12–15 min", "Gebruik de pauze vroeg, niet pas als het misgaat"] }),
   ]},
   { week: 3, dates: "22–28 jun", km: "13–15 km", phase: "Fase 1 · Herstart & wennen", sessions: [
-    ma({ zone: "interval", min: 40, title: "6×1 min vlot",         goal: "Beentjes wakker",    blocks: ["8–10 min inlopen", "6×1 min vlot (RPE 7)", "2 min rustig ertussen", "Uitlopen, 40 min totaal"] }),
+    ma({ zone: "interval", min: 40, title: "6×1 min vlot",         goal: "Beentjes wakker",    blocks: ["8–10 min inlopen", "6×1 min vlot (RPE 7)", "5×2 min rustig tussen de blokken", "Uitlopen, 40 min totaal"] }),
     za({ zone: "duur",     min: 50, title: "50 min duurloop",      goal: "Langer op de benen", blocks: ["50 min rustige duurloop", "Constant en ontspannen"] }),
   ]},
   { week: 4, dates: "29 jun–5 jul", km: "10–12 km", phase: "Fase 1 · Herstart & wennen", recovery: true, sessions: [
@@ -144,11 +144,11 @@ const PLAN = [
 
   /* Fase 2 · Duur uitbouwen en lichte snelheid */
   { week: 5, dates: "6–12 jul", km: "15–17 km", phase: "Fase 2 · Duur uitbouwen", sessions: [
-    ma({ zone: "tempo",  min: 45, title: "3×5 min steady",        goal: "Drempelgevoel",      blocks: ["8–10 min inlopen", "3×5 min steady (RPE 5-6)", "3 min rustig ertussen", "Uitlopen, 45 min totaal"] }),
+    ma({ zone: "tempo",  min: 45, title: "3×5 min steady",        goal: "Drempelgevoel",      blocks: ["8–10 min inlopen", "3×5 min steady (RPE 5-6)", "2×3 min rustig tussen de blokken", "Uitlopen, 45 min totaal"] }),
     za({ zone: "duur",   min: 60, title: "60 min duurloop",       goal: "Eerste uur",         blocks: ["60 min rustig", "Verdeel je krachten"] }),
   ]},
   { week: 6, dates: "13–19 jul", km: "16–18 km", phase: "Fase 2 · Duur uitbouwen", sessions: [
-    ma({ zone: "interval", min: 45, title: "6×2 min vlot",        goal: "Snelheidsuithouding", blocks: ["8–10 min inlopen", "6×2 min vlot (RPE 6-7)", "2 min rustig ertussen", "Uitlopen, 45 min totaal"] }),
+    ma({ zone: "interval", min: 45, title: "6×2 min vlot",        goal: "Snelheidsuithouding", blocks: ["8–10 min inlopen", "6×2 min vlot (RPE 6-7)", "5×2 min rustig tussen de blokken", "Uitlopen, 45 min totaal"] }),
     za({ zone: "duur",     min: 65, title: "65 min duurloop",     goal: "Duur vasthouden",     blocks: ["65 min rustige duurloop", "Drinken oefenen"] }),
   ]},
   { week: 7, dates: "20–26 jul", km: "18–20 km", phase: "Fase 2 · Duur uitbouwen", sessions: [
@@ -156,17 +156,17 @@ const PLAN = [
     za({ zone: "duur",   min: 70, title: "70 min duurloop",       goal: "Langste tot nu toe",  blocks: ["70 min rustig", "Constant tempo"] }),
   ]},
   { week: 8, dates: "27 jul–2 aug", km: "13–15 km", phase: "Fase 2 · Duur uitbouwen", recovery: true, sessions: [
-    ma({ zone: "duur",  min: 35, title: "35 min + versnellingen", goal: "Los blijven",         blocks: ["35 min rustig", "5×20 sec los versnellen"] }),
+    ma({ zone: "duur",  min: 35, title: "35 min met versnellingen", goal: "Los blijven", blocks: ["35 min totaal", "Loop daarin 5×20 sec los versnellen", "Herstel rustig tussen de versnellingen; de klok blijft doorlopen"] }),
     za({ zone: "duur",  min: 55, title: "55 min duurloop",        goal: "Herstelweek",         blocks: ["55 min rustig", "Geen tempo"] }),
   ]},
 
   /* Fase 3 · Halve-marathonritme opbouwen */
   { week: 9, dates: "3–9 aug", km: "20–22 km", phase: "Fase 3 · HM-ritme opbouwen", sessions: [
-    ma({ zone: "tempo", min: 55, title: "4×6 min tempoblok",      goal: "HM-ritme voelen",     blocks: ["8–10 min inlopen", "4×6 min tempoblok (RPE 6)", "3 min rustig ertussen", "Uitlopen, 55 min totaal"] }),
+    ma({ zone: "tempo", min: 55, title: "4×6 min tempoblok",      goal: "HM-ritme voelen",     blocks: ["8–10 min inlopen", "4×6 min tempoblok (RPE 6)", "3×3 min rustig tussen de blokken", "Uitlopen, 55 min totaal"] }),
     za({ zone: "duur",  min: 75, title: "75 min duurloop",        goal: "Piek-duur opbouwen",  blocks: ["75 min rustige duurloop", "Rustig en geduldig"] }),
   ]},
   { week: 10, dates: "10–16 aug", km: "20–22 km", phase: "Fase 3 · HM-ritme opbouwen", sessions: [
-    ma({ zone: "interval", min: 50, title: "5×3 min vlot",        goal: "Scherpte",            blocks: ["8–10 min inlopen", "5×3 min vlot (RPE 6-7)", "2 min rustig ertussen", "Uitlopen, 50 min totaal"] }),
+    ma({ zone: "interval", min: 50, title: "5×3 min vlot",        goal: "Scherpte",            blocks: ["8–10 min inlopen", "5×3 min vlot (RPE 6-7)", "4×2 min rustig tussen de blokken", "Uitlopen, 50 min totaal"] }),
     za({ zone: "duur",     min: 80, title: "80 min duurloop",     goal: "Duur vasthouden",     blocks: ["80 min rustig", "Drinken & eten oefenen"] }),
   ]},
   { week: 11, dates: "17–23 aug", km: "22–24 km", phase: "Fase 3 · HM-ritme opbouwen", sessions: [
@@ -180,19 +180,19 @@ const PLAN = [
 
   /* Fase 4 · Specifiek trainen en fris worden */
   { week: 13, dates: "31 aug–6 sep", km: "24–26 km", phase: "Fase 4 · Specifiek & fris", sessions: [
-    ma({ zone: "tempo", min: 60, title: "3×10 min tempoblok",     goal: "Specifieke scherpte", blocks: ["8–10 min inlopen", "3×10 min tempoblok (RPE 6-7)", "4 min rustig ertussen", "Uitlopen, 60 min totaal"] }),
+    ma({ zone: "tempo", min: 60, title: "3×10 min tempoblok",     goal: "Specifieke scherpte", blocks: ["8–10 min inlopen", "3×10 min tempoblok (RPE 6-7)", "2×4 min rustig tussen de blokken", "Uitlopen, 60 min totaal"] }),
     za({ zone: "duur",  min: 90, title: "90 min duurloop",        goal: "⭐ Belangrijk testmoment", kind: "Testmoment", test: true, blocks: ["90 min rustige duurloop", "Kantelpunt: lukt dit pijnvrij?", "Knie de dag erna normaal = groen licht voor 1:45"] }),
   ]},
   { week: 14, dates: "7–13 sep", km: "24–26 km", phase: "Fase 4 · Specifiek & fris", sessions: [
-    ma({ zone: "interval", min: 55, title: "4×5 min vlot",        goal: "Fris & scherp",       blocks: ["8–10 min inlopen", "4×5 min vlot (RPE 6)", "3 min rustig ertussen", "Uitlopen, 55 min totaal"] }),
+    ma({ zone: "interval", min: 55, title: "4×5 min vlot",        goal: "Fris & scherp",       blocks: ["8–10 min inlopen", "4×5 min vlot (RPE 6)", "3×3 min rustig tussen de blokken", "Uitlopen, 55 min totaal"] }),
     za({ zone: "duur",     min: 95, title: "95 min duurloop",     goal: "Lange duur",          blocks: ["95 min rustig", "Laatste 15 min steady als de knie goed is"] }),
   ]},
   { week: 15, dates: "14–20 sep", km: "27–29 km", phase: "Fase 4 · Specifiek & fris", sessions: [
-    ma({ zone: "tempo", min: 65, title: "2×15 min HM-inspanning", goal: "Wedstrijdritme",      blocks: ["8–10 min inlopen", "2×15 min op halve-marathoninspanning (RPE 6-7)", "5 min rustig ertussen", "Uitlopen, 65 min totaal"] }),
+    ma({ zone: "tempo", min: 65, title: "2×15 min HM-inspanning", goal: "Wedstrijdritme",      blocks: ["8–10 min inlopen", "2×15 min op halve-marathoninspanning (RPE 6-7)", "5 min rustig tussen de twee blokken", "Uitlopen, 65 min totaal"] }),
     za({ zone: "duur",  min: 102, title: "100–105 min lange duurloop", goal: "Piek-lange duur", blocks: ["100–105 min rustige lange duurloop", "Niet forceren"] }),
   ]},
   { week: 16, dates: "21–27 sep", km: "raceweek", phase: "Fase 4 · Specifiek & fris", taper: true, race: true, sessions: [
-    ma({ zone: "tempo", min: 40, title: "Benen los + 3×3 min",    goal: "Aanscherpen op race", kind: "Taper", blocks: ["35–40 min rustig", "3×3 min op wedstrijdgevoel", "Alles licht en kort houden"] }),
+    ma({ zone: "tempo", min: 40, title: "40 min · 3×3 min", goal: "Aanscherpen op race", kind: "Taper", blocks: ["12 min rustig inlopen", "3×3 min op wedstrijdgevoel", "2×2 min rustig tussen de blokken", "15 min rustig uitlopen", "40 min totaal; alles licht en kort houden"] }),
     za({ zone: "tempo", min: 105, title: "🏁 Halve marathon",      goal: "Doelrace · richting 1:45", kind: "Doelrace", blocks: ["Wedstrijd zaterdag → halve marathon (≈ 5:00/km)", "Wedstrijd zondag → vandaag 15–20 min loslopen of rust", "Eerste 5 km iets rustiger starten", "Beheersing, geen bravoure"] }),
   ]},
 ];
