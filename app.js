@@ -1138,5 +1138,13 @@ setTimeout(() => document.querySelectorAll(".reveal:not(.in)").forEach((el) => e
 
 /* Service worker voor offline gebruik (alleen op http/https, niet via file://) */
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  /* Auto-verversen: nieuwe versie neemt over -> pagina herlaadt zichzelf een keer */
+  const hadController = !!navigator.serviceWorker.controller;
+  let autoReloaded = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (!hadController || autoReloaded) return;
+    autoReloaded = true;
+    window.location.reload();
+  });
   navigator.serviceWorker.register("sw.js").catch(() => {});
 }
