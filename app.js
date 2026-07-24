@@ -322,7 +322,7 @@ function fmtPace(perKm) {
 
 /* Afgeleide statistieken uit de log */
 function computeStats() {
-  let done = 0, km = 0, maxDist = 0, maxTime = 0, bestPace = 0, raceDone = false;
+  let done = 0, km = 0, maxDist = 0, maxTime = 0, bestPace = 0, raceDone = false, testDone = false;
   flatSessions.forEach((s) => {
     const e = log[sid(s.week, s.day)];
     if (!e || !e.done) return;
@@ -335,6 +335,7 @@ function computeStats() {
     const p = paceSeconds(e.distance, e.time);
     if (p && (bestPace === 0 || p < bestPace)) bestPace = p;
     if (s.week === LAST_SESSION.week && s.day === LAST_SESSION.day) raceDone = true;
+    if (s.test) testDone = true;
   });
   let streak = 0, run = 0;
   flatSessions.forEach((s) => {
@@ -345,7 +346,7 @@ function computeStats() {
   PLAN.forEach((w) => {
     if (w.sessions.every((s) => log[sid(w.week, s.day)]?.done)) fullWeeks++;
   });
-  return { done, total: totalSessions, km, maxDist, maxTime, bestPace, raceDone, streak, fullWeeks };
+  return { done, total: totalSessions, km, maxDist, maxTime, bestPace, raceDone, testDone, streak, fullWeeks };
 }
 
 function currentWeek() {
