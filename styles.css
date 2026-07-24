@@ -299,7 +299,7 @@ h1, h2, h3, h4, p { margin-top: 0; }
 .session.is-race-session:hover { border-color: color-mix(in srgb, var(--pastel-pink) 55%, transparent); background: linear-gradient(120deg, color-mix(in srgb, var(--pastel-blue) 17%, transparent), color-mix(in srgb, var(--pastel-pink) 12%, transparent)), var(--card-2); }
 .session.is-race-session.is-done { opacity: 0.78; }
 .session:active { transform: scale(0.98); }
-.session:hover { background: #222936; }
+
 .session.is-done { opacity: 0.62; }
 .session.is-done .session-title { text-decoration: line-through; }
 .session-day {
@@ -644,3 +644,19 @@ h1, h2, h3, h4, p { margin-top: 0; }
 .ck-todo { box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--muted) 38%, transparent); }
 .cons-score { font-size: 0.72rem; color: var(--muted); }
 .cons-score strong { color: var(--volt); font-weight: 800; }
+
+/* ===== Polish (jul 2026): micro-interacties, accentbewuste hover ===== */
+.session { transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease; }
+.session:hover { background: color-mix(in srgb, var(--volt) 8%, var(--card-2)); transform: translateX(3px); }
+.btn-primary, .btn-ghost, .btn-add { transition: transform 0.18s ease, filter 0.18s ease, background 0.18s ease; }
+.btn-primary:hover { transform: translateY(-1px); filter: brightness(1.07); }
+.btn-ghost:hover, .btn-add:hover { transform: translateY(-1px); }
+.ccell, .cdot { transition: transform 0.18s ease; }
+.ccell:hover, .cdot:hover { transform: scale(1.4); }
+.badge.got { transition: transform 0.2s ease; }
+.badge.got:hover { transform: translateY(-2px); }
+@media (prefers-reduced-motion: reduce) {
+  .session, .btn-primary, .btn-ghost, .btn-add, .ccell, .cdot, .badge.got { transition: none; }
+  .session:hover, .btn-primary:hover, .btn-ghost:hover, .btn-add:hover { transform: none; }
+  .ccell:hover, .cdot:hover, .badge.got:hover { transform: none; }
+}
