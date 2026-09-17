@@ -422,7 +422,8 @@ function renderCountdown() {
 
 function renderStats(stats) {
   animateCount($("statDone"), stats.done);
-  animateCount($("statKm"), Math.round(stats.km * 10) / 10, " km");
+  if (UNIT === "min") animateCount($("statKm"), Math.round(stats.secs / 60), " min");
+  else animateCount($("statKm"), Math.round(stats.km * 10) / 10, " km");
   animateCount($("statStreak"), stats.streak);
   const cw = currentWeek();
   const wk = PLAN.find((w) => w.week === cw);
