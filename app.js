@@ -519,6 +519,8 @@ function renderZones() {
 }
 
 function renderChart() {
+  const volumeSub = document.querySelector("#volumeChart")?.closest(".panel")?.querySelector(".panel-sub");
+  if (volumeSub) volumeSub.textContent = `${(typeof UNIT !== "undefined" ? UNIT : "min") === "min" ? "minuten" : "kilometers"} · gepland · gedaan`;
   const cwBar = currentWeek();
   const max = Math.max(...PLAN.map((w) => w.sessions.reduce((n, s) => n + s[UNIT], 0)));
   $("volumeChart").innerHTML = PLAN.map((w) => {
@@ -595,6 +597,9 @@ function renderWeeks() {
       </article>`;
   });
   $("weeksList").innerHTML = html;
+  /* Koppen altijd kloppend met het schema */
+  const schemaKop = [...document.querySelectorAll(".phase-head")].find((e) => /Het schema/.test(e.textContent));
+  if (schemaKop) schemaKop.textContent = `Het schema · ${PLAN.length} weken`;
   $("weeksList").querySelectorAll(".session").forEach((b) =>
     b.addEventListener("click", () => openDetail(+b.dataset.week, b.dataset.day)));
   observeReveals();
