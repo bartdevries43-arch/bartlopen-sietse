@@ -675,3 +675,23 @@ h1, h2, h3, h4, p { margin-top: 0; }
 @media (max-width: 380px) {
   .form-grid { grid-template-columns: 1fr; }
 }
+
+/* ----- Snelknop: gelijk naar je trainingen ----- */
+.naar-trainingen { display: flex; align-items: center; gap: 12px; width: 100%; margin: 0 0 14px; padding: 12px 12px 12px 13px; text-align: left; border: 1px solid color-mix(in srgb, var(--volt) 45%, transparent); border-radius: 20px; background: linear-gradient(110deg, color-mix(in srgb, var(--volt) 22%, var(--card)), var(--card) 78%); color: var(--ink); box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22); cursor: pointer; animation: ntIn 0.5s ease-out both; }
+.naar-trainingen .nt-icoon { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 13px; background: color-mix(in srgb, var(--volt) 20%, transparent); font-size: 1.25rem; line-height: 1; }
+.naar-trainingen .nt-tekst { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.naar-trainingen strong { font-size: 0.98rem; font-weight: 800; line-height: 1.2; }
+.naar-trainingen small { color: var(--muted); font-size: 0.76rem; font-weight: 600; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.naar-trainingen .nt-pijl { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--volt); color: var(--volt-ink); font-size: 1.05rem; font-weight: 900; transition: transform 0.2s ease-out; }
+.naar-trainingen:hover { border-color: color-mix(in srgb, var(--volt) 70%, transparent); }
+.naar-trainingen:hover .nt-pijl { transform: translateY(2px); }
+.naar-trainingen:active { transform: scale(0.98); }
+@keyframes ntIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .naar-trainingen { animation: none; } .naar-trainingen .nt-pijl { transition: none; } }
+body.print-schema .naar-trainingen { display: none !important; }
+
+/* ----- Weekgrafiek past ook bij lange schema's (geen zijwaarts schuiven op de telefoon) ----- */
+.bar { min-width: 0; }
+.chart:has(.bar:nth-child(24)) { gap: 3px; }
+.chart:has(.bar:nth-child(24)) .bar:nth-child(even) .bar-x { visibility: hidden; }
+.chart:has(.bar:nth-child(34)) { gap: 2px; }

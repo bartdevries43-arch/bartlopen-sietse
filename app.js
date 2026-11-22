@@ -626,6 +626,40 @@ function renderInfo() {
     </article>`).join("");
 }
 
+/* ----- Snelknop: gelijk naar je trainingen ------------------------------ */
+function renderNaarTrainingen() {
+  const hero = document.querySelector("#listView .hero");
+  if (!hero) return;
+  let btn = document.getElementById("naarTrainingen");
+  if (!btn) {
+    btn = document.createElement("button");
+    btn.id = "naarTrainingen";
+    btn.type = "button";
+    btn.className = "naar-trainingen";
+    btn.addEventListener("click", naarTrainingen);
+    hero.insertAdjacentElement("afterend", btn);
+  }
+  const cw = currentWeek();
+  const laatste = PLAN[PLAN.length - 1].week;
+  const volgende = flatSessions.find((s) => s.week >= cw && !log[sid(s.week, s.day)]?.done);
+  const sub = volgende
+    ? `Week ${cw} van ${laatste} · volgende: ${volgende.title.replace(/^[^\p{L}\d]+/u, "").trim()}`
+    : `Week ${cw} van ${laatste} · bekijk je schema`;
+  const emoji = (typeof CONFIG !== "undefined" && CONFIG.footEmoji) || "🏃";
+  btn.setAttribute("aria-label", `Gelijk naar je trainingen. ${sub}`);
+  btn.innerHTML = `<span class="nt-icoon" aria-hidden="true">${emoji}</span>` +
+    `<span class="nt-tekst"><strong>Gelijk naar je trainingen</strong><small>${escapeHtml(sub)}</small></span>` +
+    `<span class="nt-pijl" aria-hidden="true">↓</span>`;
+}
+function naarTrainingen() {
+  const doel = document.querySelector(".week-card.is-current") || document.querySelector(".weeks");
+  if (!doel) return;
+  doel.classList.add("in");
+  const bar = document.querySelector(".topbar");
+  const y = doel.getBoundingClientRect().top + window.scrollY - (bar ? bar.offsetHeight : 0) - 8;
+  window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+}
+
 function addJumpButton() {
   const head = document.querySelector(".weeks .phase-head");
   if (!head || document.getElementById("jumpNow")) return;
@@ -781,6 +815,7 @@ function renderShiftControl() {
 function renderAll() {
   const stats = computeStats();
   renderHero(stats);
+  renderNaarTrainingen();
   renderStats(stats);
   renderGreeting();
   renderConsistency();
